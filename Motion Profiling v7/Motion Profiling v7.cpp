@@ -22,9 +22,9 @@ double fresnelCosineCalc(double input) {
 
 double getDirection(double x, double y) {
 	if (x < 0) {
-		return (3 * pi / 2) - atan(x / y);
+		return (3 * pi / 2) - atan(y / x);
 	} else if (x > 0) {
-		return (pi / 2) - atan(x / y);
+		return (pi / 2) - atan(y / x);
 	} else {
 		if (y > 0) {
 			return 0;
@@ -60,7 +60,6 @@ double calcPathY(double skew, double duration) {
 
 int main() {
 	double x1, y1, x2, y2, x3, y3;
-	double skew, time;
 	cout << "Max Velocity:";
 	cin >> max_velocity;
 	cout << "Width:";
@@ -93,9 +92,26 @@ int main() {
 	} else {
 		sign = 1;
 	}
+	double best_t = 0;
+	double best_s = 0;
 	angle = pi - angle;
-	cout << endl << calcPathX(2.5, 4.27) << endl << calcPathY(2.5, 4.27);
-	cout << endl << "Angle: " << sign * angle * 180 / pi;
+	double time = (2 * angle * width) / (max_velocity * driftiness);
+	double skewness = 0;
+	double error = pow(calcPathX(0, (2 * angle * width) / (max_velocity * driftiness)) - xf, 2) + pow(calcPathY(0, (2 * angle * width) / (max_velocity * driftiness)) - yf, 2);
+	while (time <= 15) {
+		skewness = 0;
+		while (skewness <= time) {
+			if (pow(calcPathX(skewness, time) - xf, 2) + pow(calcPathY(skewness, time) - yf, 2) < error) {
+				error = pow(calcPathX(skewness, time) - xf, 2) + pow(calcPathY(skewness, time) - yf, 2);
+				best_t = time;
+				best_s = skewness;
+			}
+			skewness += 0.01;
+		}
+		time += 0.01;
+	}
+	cout << endl << "Time: " << best_t << ", Skewness:" << best_s;
+	//cout << endl << "Angle: " << sign * angle * 180 / pi;
 	return 0;
 }
 

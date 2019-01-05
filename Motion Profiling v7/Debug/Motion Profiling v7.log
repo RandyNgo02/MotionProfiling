@@ -1,4 +1,2 @@
 ﻿  Motion Profiling v7.cpp
-c:\users\randy\source\repos\motion profiling v7\motion profiling v7\motion profiling v7.cpp(63): warning C4101: 'time': unreferenced local variable
-c:\users\randy\source\repos\motion profiling v7\motion profiling v7\motion profiling v7.cpp(63): warning C4101: 'skew': unreferenced local variable
   Motion Profiling v7.vcxproj -> C:\Users\randy\source\repos\Motion Profiling v7\Debug\Motion Profiling v7.exe
